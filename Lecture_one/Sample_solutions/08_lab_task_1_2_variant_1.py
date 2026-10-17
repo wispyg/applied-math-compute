@@ -1,20 +1,19 @@
-"""Лабораторна 1, завдання 1.2, демонстраційний варіант 1.
+"""Лабораторна 1, завдання 1.2, варіант 3.
 
-Табулювання кусочно заданої функції на [0, 1] з кроком 0.1.
+Табулювання кусочно заданої функції на [-2.5, 2] з кроком 0.5.
 Чистий Python: без NumPy, сітка будується через range та індекс i.
 """
 
 import math
 
 
-# --- Вхідні дані варіанта 1 ---
-left = 0.0
-right = 1.0
-h = 0.1
+# --- Вхідні дані варіанта 3 ---
+left = -2.5
+right = 2.0
+h = 0.5
 
-a = 0.75
-b = 1.19
-c = -2.5
+a = 5
+b = 3
 
 
 # --- Перевірка сітки ---
@@ -32,14 +31,14 @@ if not math.isclose(steps_real, steps, rel_tol=0.0, abs_tol=1e-12):
 
 # --- Кусочно задана функція ---
 def piecewise_value(x):
-    """Повертає номер гілки та значення функції для x у [0, 1]."""
+    """Повертає номер гілки та значення функції для x у [-2.5, 2]."""
     if not left <= x <= right:
-        raise ValueError("Аргумент поза областю [0, 1].")
+        raise ValueError("Аргумент поза областю [-2.5, 2].")
 
-    if x < 0.5:
-        return 1, a * x + b * math.cos(x)
+    if abs(x) < a/b:
+        return 1, math.sin(abs(a*x + b))
 
-    return 2, b * x ** 2 + c * math.sin(2 * x)
+    return 2, math.cos(abs(a*x - b))
 
 
 # --- Таблиця ---
@@ -53,7 +52,7 @@ for i in range(steps + 1):
 
 
 # --- Структурні перевірки зі слайда ---
-assert steps + 1 == 11
+assert steps + 1 == 10
 assert piecewise_value(0.0)[0] == 1
-assert piecewise_value(0.5)[0] == 2
-assert piecewise_value(1.0)[0] == 2
+assert piecewise_value(0.5)[0] == 1
+assert piecewise_value(2.0)[0] == 2
